@@ -5,13 +5,13 @@
               android:layout_height="fill_parent">
     <TextView
             style="?android:listSeparatorTextViewStyle"
-            android:text="Shipping information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+        android:id="@+id/shippingInformation"/>
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0px"
@@ -27,27 +27,23 @@
                     android:inputType="textPersonName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/firstName"
-                    android:hint="First Name"/>
+                    android:id="@+id/firstName"/>
             <EditText
                     android:inputType="textPersonName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/lastName"
-                    android:hint="Last Name"/>
+                    android:id="@+id/lastName"/>
             <EditText
                     android:inputType="phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/phone"
-                    android:hint="Phone number"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
             <EditText
                     android:inputType="textPostalAddress"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Street Address 1"
                     android:id="@+id/streetAddress1"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
@@ -55,7 +51,6 @@
                     android:inputType="textPostalAddress"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Street Address 2"
                     android:id="@+id/streetAddress2"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
@@ -63,7 +58,6 @@
                     android:inputType="textPostalAddress"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="City"
                     android:id="@+id/city"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
@@ -71,7 +65,6 @@
                     android:inputType="text"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Postal Code"
                     android:id="@+id/postalCode"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
@@ -79,7 +72,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/country"
-                    android:hint="Country"
                     android:imeOptions="actionNext"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
@@ -87,13 +79,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/state"
-                    android:hint="State"
                     android:imeOptions="actionDone"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"/>
             <Button
                     style="@style/RoboButton"
-                    android:text="Place Order"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/placeOrder"

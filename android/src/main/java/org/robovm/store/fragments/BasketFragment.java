@@ -27,6 +27,7 @@ import org.robovm.store.R;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.model.Basket;
 import org.robovm.store.model.Order;
+import static org.robovm.store.util.I18N.*;
 import org.robovm.store.util.Images;
 import org.robovm.store.views.SwipableListItem;
 import org.robovm.store.views.ViewSwipeTouchListener;
@@ -50,10 +51,17 @@ public class BasketFragment extends ListFragment {
     }
 
     @Override
-    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View shoppingCartView = inflater.inflate(R.layout.basket, container, false);
 
+        TextView basketEmpty = (TextView)shoppingCartView.findViewById(R.id.basketEmpty);
+        basketEmpty.setText(getLocalizedString(Key.basket_empty));
+
+        TextView goAddSomething = (TextView) shoppingCartView.findViewById(R.id.go_add_sth);
+        goAddSomething.setText(getLocalizedString(Key.go_add_something));
+
         checkoutButton = (Button) shoppingCartView.findViewById(R.id.checkoutBtn);
+        checkoutButton.setText(getLocalizedString(Key.checkout));
         checkoutButton.setOnClickListener((b) -> {
             if (checkoutListener != null) {
                 checkoutListener.run();

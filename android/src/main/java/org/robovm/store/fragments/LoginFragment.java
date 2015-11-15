@@ -31,7 +31,7 @@ import android.widget.*;
 import org.robovm.store.R;
 import org.robovm.store.api.RoboVMWebService;
 import org.robovm.store.util.Gravatar;
-import org.robovm.store.util.I18N;
+import static org.robovm.store.util.I18N.*;
 import org.robovm.store.views.CircleDrawable;
 
 public class LoginFragment extends Fragment {
@@ -69,6 +69,9 @@ public class LoginFragment extends Fragment {
                 "<b><font color='#000080'>static</font></b> String <b><i><font color='#660E7A'>ROBOVM_ACCOUNT_EMAIL</font></i></b> = <b><font color='#008000'>\"...\"</font>;</b>");
         textView.setText(coloredText, TextView.BufferType.SPANNABLE);
 
+        TextView explanationTextView = (TextView)view.findViewById(R.id.explanationTextView);
+        explanationTextView.setText(getLocalizedString(Key.explanation_text));
+
         return view;
     }
 
@@ -84,6 +87,7 @@ public class LoginFragment extends Fragment {
 
         password = (EditText) view.findViewById(R.id.password);
         login = (Button) view.findViewById(R.id.signInBtn);
+        login.setText(getLocalizedString(Key.log_in_title));
         login.setOnClickListener((b) -> {
             login(ROBOVM_ACCOUNT_EMAIL, password.getText().toString());
         });
@@ -107,7 +111,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void login(String username, String password) {
-        ProgressDialog progressDialog = ProgressDialog.show(getActivity(), I18N.getLocalizedString(I18N.Key.please_wait), I18N.getLocalizedString(I18N.Key.logging_in), true);
+        ProgressDialog progressDialog = ProgressDialog.show(getActivity(), getLocalizedString(Key.please_wait), getLocalizedString(Key.logging_in), true);
         this.login.setEnabled(false);
         this.password.setEnabled(false);
 
@@ -115,7 +119,7 @@ public class LoginFragment extends Fragment {
             if (success && loginSuccessListener != null) {
                 loginSuccessListener.run();
             } else {
-                Toast.makeText(getActivity(), I18N.getLocalizedString(I18N.Key.verify_credentials),
+                Toast.makeText(getActivity(), getLocalizedString(Key.verify_credentials),
                         Toast.LENGTH_LONG).show();
             }
 

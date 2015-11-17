@@ -19,9 +19,11 @@ package org.robovm.store.fragments;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import org.robovm.store.R;
 import org.robovm.store.api.RoboVMWebService;
@@ -100,6 +102,16 @@ public class ShippingDetailsFragment extends Fragment {
         stateField = (AutoCompleteTextView) shippingDetailsView.findViewById(R.id.state);
         stateField.setText(user.getState());
         stateField.setHint(getLocalizedString(Key.state));
+        stateField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    placeOrder();
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
         zipCodeField = (EditText) shippingDetailsView.findViewById(R.id.postalCode);

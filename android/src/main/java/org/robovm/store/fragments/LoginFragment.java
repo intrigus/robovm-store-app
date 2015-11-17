@@ -24,9 +24,11 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import org.robovm.store.R;
 import org.robovm.store.api.RoboVMWebService;
@@ -81,11 +83,21 @@ public class LoginFragment extends Fragment {
         imageView = (ImageView) view.findViewById(R.id.imageView1);
         loadUserImage();
 
-        EditText textView = (EditText) view.findViewById(R.id.email);
-        textView.setEnabled(false);
-        textView.setText(ROBOVM_ACCOUNT_EMAIL);
+        EditText email = (EditText) view.findViewById(R.id.email);
+        email.setEnabled(false);
+        email.setText(ROBOVM_ACCOUNT_EMAIL);
 
         password = (EditText) view.findViewById(R.id.password);
+        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    login(ROBOVM_ACCOUNT_EMAIL, password.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
         login = (Button) view.findViewById(R.id.signInBtn);
         login.setText(getLocalizedString(Key.log_in_title));
         login.setOnClickListener((b) -> {

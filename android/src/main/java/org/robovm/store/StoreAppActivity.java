@@ -193,9 +193,13 @@ public class StoreAppActivity extends Activity {
     }
 
     public void showLogin() {
-        LoginFragment login = new LoginFragment();
-        login.setLoginSuccessListener(this::showAddress);
-        switchScreens(login);
+        if (RoboVMWebService.getInstance().isAuthenticated()) {
+            ((Runnable) this::showAddress).run();
+        } else {
+            LoginFragment login = new LoginFragment();
+            login.setLoginSuccessListener(this::showAddress);
+            switchScreens(login);
+        }
     }
 
     public void showAddress() {

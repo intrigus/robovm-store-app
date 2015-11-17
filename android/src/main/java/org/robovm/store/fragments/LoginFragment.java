@@ -129,6 +129,7 @@ public class LoginFragment extends Fragment {
 
         RoboVMWebService.getInstance().authenticate(username, password, (success) -> {
             if (success && loginSuccessListener != null) {
+                getFragmentManager().popBackStackImmediate();
                 loginSuccessListener.run();
             } else {
                 Toast.makeText(getActivity(), getLocalizedString(Key.verify_credentials),

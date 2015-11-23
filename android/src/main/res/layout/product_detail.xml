@@ -23,7 +23,7 @@
                 android:layout_marginBottom="4dp">
             <TextView
                     android:text="Men's Java t-shirt"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/productTitle"
                     android:layout_weight="1"
@@ -57,7 +57,7 @@
                 <TextView
                         android:id="@+id/sizeView"
                         android:layout_column="0"
-                        android:layout_gravity="left|center_vertical"
+                        android:layout_gravity="start|center_vertical"
                         android:gravity="center"
                         android:layout_marginRight="4dp"/>
                 <Spinner
@@ -70,7 +70,7 @@
                 <TextView
                         android:id="@+id/colorView"
                         android:layout_column="0"
-                        android:layout_gravity="left|center_vertical"
+                        android:layout_gravity="start|center_vertical"
                         android:gravity="center"
                         android:layout_marginRight="4dp"/>
                 <Spinner

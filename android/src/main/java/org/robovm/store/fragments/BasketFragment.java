@@ -18,8 +18,13 @@ package org.robovm.store.fragments;
 
 import android.app.ListFragment;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -79,6 +84,54 @@ public class BasketFragment extends ListFragment {
         getListView().setDividerHeight(0);
         getListView().setDivider(null);
         setListAdapter(new GroceryListAdapter(view.getContext(), basket));
+        getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+        getListView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                                  long id, boolean checked) {
+                mode.setTitle(getListView().getCheckedItemCount() + " " + getLocalizedString(Key.selected));
+                /*if (getListView().getCheckedItemCount() == 1) {
+                    TODO add ability to edit an item in the basket
+                    mode.getMenu().findItem(R.id.edit_item).setVisible(true);
+                } else {
+                mode.getMenu().findItem(R.id.edit_item).setVisible(false);
+                }*/
+                mode.getMenu().findItem(R.id.edit_item).setVisible(false); //Todo Remove this if todo above is done
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.delete_item:
+                        SparseBooleanArray selectedItems = getListView().getCheckedItemPositions();
+                        for (int i = (selectedItems.size() - 1); i >= 0; i--) {
+                            if (selectedItems.valueAt(i)) {
+                                ((GroceryListAdapter) getListView().getAdapter()).remove(selectedItems.keyAt(i));
+                            }
+                        }
+                        mode.finish();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.getMenuInflater().inflate(R.menu.context_menu, menu);
+                return true;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+        });
+
         if (getListAdapter().getCount() == 0) {
             checkoutButton.setVisibility(View.INVISIBLE);
         }
@@ -101,6 +154,11 @@ public class BasketFragment extends ListFragment {
             return position;
         }
 
+        public void remove(int position){
+            basket.remove(position);
+            notifyDataSetChanged();
+        }
+
         @Override
         public Object getItem(int position) {
             return basket.get(position).toString();
@@ -118,31 +176,6 @@ public class BasketFragment extends ListFragment {
             View view = convertView; // re-use an existing view, if one is available
             if (view == null) {
                 view = LayoutInflater.from(context).inflate(R.layout.basket_item, parent, false);
-                ViewSwipeTouchListener swipper = ((SwipableListItem) view).getSwipeListener();
-                final View finalView = view;
-                swipper.addEventListener(new ViewSwipeTouchListener.EventListener() {
-                    @Override
-                    public void onSwipeGestureBegin() {
-                        parent.requestDisallowInterceptTouchEvent(true);
-                    }
-
-                    @Override
-                    public void onSwipeGestureEnd() {
-                        parent.requestDisallowInterceptTouchEvent(false);
-                    }
-
-                    @Override
-                    public void onItemSwipped() {
-                        // If view has already been processed, do nothing
-                        if (finalView.getParent() == null) {
-                            return;
-                        }
-                        int p = ((ListView) parent).getPositionForView(finalView);
-                        Basket basket = RoboVMWebService.getInstance().getBasket();
-                        basket.remove(p);
-                        notifyDataSetChanged();
-                    }
-                });
             }
 
             ((TextView) view.findViewById(R.id.productTitle)).setText(order.getProduct().getName());
@@ -151,7 +184,6 @@ public class BasketFragment extends ListFragment {
             ((TextView) view.findViewById(R.id.productSize)).setText(order.getSize().getName());
 
             ImageView orderImage = (ImageView) view.findViewById(R.id.productImage);
-            orderImage.setImageResource(R.drawable.product_image);
 
             Images.setImageFromUrlAsync(orderImage, order.getColor().getImageUrls().get(0));
 

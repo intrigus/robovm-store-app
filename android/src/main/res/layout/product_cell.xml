@@ -28,11 +28,12 @@
                 android:paddingBottom="8dp"
                 android:background="#ffffff"
                 android:paddingRight="8dp"/>
-        <View
+        <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
-                android:id="@id/view1"
-                android:background="@drawable/discrete_shadow"/>
+                android:id="@+id/view1"
+                android:background="@drawable/discrete_shadow"/>-->
+            <!-- This causes issues, because the id view1 is already defined! This layout also seems to be unused.-->
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"
